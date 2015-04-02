@@ -1,19 +1,18 @@
 
-import com.sun.jmx.snmp.Enumerated;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class PesquisaPessoaServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String paramNome = req.getParameter("nome");
+        String paramNome = (String) req.getAttribute("nome");
         String paramMobile = req.getParameter("mobile");
 
         List<Pessoa> encontradas = Pessoas.getPessoa(paramNome);

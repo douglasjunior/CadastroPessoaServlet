@@ -1,11 +1,14 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet {
 
@@ -43,7 +46,9 @@ public class LoginServlet extends HttpServlet {
                 resp.addCookie(cookieUsuario);
                 resp.addCookie(cookieSenha);
             }
-
+            HttpSession sessao = req.getSession();
+            sessao.setAttribute("usuario_logado", true);
+            
             resp.sendRedirect("PesquisaPessoaServlet");
         } else {
             imprimirFormulario(resp, "Usuário ou senha incorretos.", "", "");
@@ -70,7 +75,8 @@ public class LoginServlet extends HttpServlet {
         out.print("<form method=\"POST\">");
         out.print("Usuário: <input type=\"text\" name=\"usuario\" value=\"" + usuarioSalvo + "\" /><br /><br />");
         out.print("Senha: <input type=\"password\" name=\"senha\" value=\"" + senhaSalva + "\" /><br /><br />");
-        out.print("Salvar dados: <input type=\"checkbox\" name=\"salvarDados\" /><br /><br />");
+        out.print("Salvar dados: <input type=\"checkbox\" name=\"salvarDados\""
+                + (usuarioSalvo != null && !usuarioSalvo.isEmpty() ? "checked" : "") + " /><br /><br />");
         out.print("<input type=\"submit\" value=\"Entrar\" />");
         out.print("</form>");
         out.print("</body>");
