@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         boolean acessandoLogin = httpRequest.getServletPath().equals("/LoginServlet");
-        
+
         HttpSession sessao = httpRequest.getSession();
         Boolean usuarioLogado = (Boolean) sessao.getAttribute("usuario_logado");
         if (acessandoLogin || (usuarioLogado != null && usuarioLogado == true)) {

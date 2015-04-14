@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
             }
             HttpSession sessao = req.getSession();
             sessao.setAttribute("usuario_logado", true);
-            
+
             resp.sendRedirect("PesquisaPessoaServlet");
         } else {
             imprimirFormulario(resp, "Usuário ou senha incorretos.", "", "");
@@ -59,13 +59,7 @@ public class LoginServlet extends HttpServlet {
     private static final String SENHA = "12345";
 
     private void imprimirFormulario(HttpServletResponse resp, String mensagem, String usuarioSalvo, String senhaSalva) throws IOException {
-        resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
-        out.print("<html>");
-        out.print("<head>");
-        out.print("<title>Login</title>");
-        out.print("</head>");
-        out.print("<body>");
         out.print("<h2>Informe os dados de Login</h2>");
         if (mensagem != null) {
             out.print("<p style=\"color:red\">");
@@ -79,8 +73,6 @@ public class LoginServlet extends HttpServlet {
                 + (usuarioSalvo != null && !usuarioSalvo.isEmpty() ? "checked" : "") + " /><br /><br />");
         out.print("<input type=\"submit\" value=\"Entrar\" />");
         out.print("</form>");
-        out.print("</body>");
-        out.print("</html>");
     }
 
 }

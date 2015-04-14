@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 public class PesquisaPessoaServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {       
         String paramNome = (String) req.getAttribute("nome");
         String paramMobile = req.getParameter("mobile");
 
@@ -25,13 +25,7 @@ public class PesquisaPessoaServlet extends HttpServlet {
     }
 
     private void imprimirFormularioHTML(HttpServletResponse resp, List<Pessoa> encontradas, String paramNome) throws IOException {
-        resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
-        out.print("<html>");
-        out.print("<head>");
-        out.print("<title>Pesquisa de Pessoas</title>");
-        out.print("</head>");
-        out.print("<body>");
         out.print("<h2>Pesquisa de Pessoas</h2>");
         out.print("<form method=\"GET\">");
         out.print("Nome: <input type=\"text\" name=\"nome\" value=\"" + (paramNome != null ? paramNome : "") + "\" /> ");
@@ -60,8 +54,6 @@ public class PesquisaPessoaServlet extends HttpServlet {
         }
 
         out.print("</form>");
-        out.print("</body>");
-        out.print("</html>");
     }
 
     private void imprimirMobile(HttpServletResponse resp, List<Pessoa> encontradas) throws IOException {

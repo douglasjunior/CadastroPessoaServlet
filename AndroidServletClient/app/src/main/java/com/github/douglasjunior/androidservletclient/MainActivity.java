@@ -49,49 +49,66 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     private void pesquisarPessoas() {
-        String nome = editText.getText().toString();
-        if (nome != null && !nome.isEmpty()) {
-            // cria o cliente HTTP
-            HttpClient client = new DefaultHttpClient();
+        new Thread() {
+            @Override
+            public void run() {
+                String nome = editText.getText().toString();
+                if (nome != null && !nome.isEmpty()) {
+                    // cria o cliente HTTP
+                    HttpClient client = new DefaultHttpClient();
 
-            // cria a requisição
-            String url = "http://10.2.1.30:8084/CadastroPessoa/PesquisaPessoaServlet?mobile=true&nome=" + nome;
-            HttpGet request = new HttpGet(url);
+                    // cria a requisição
+                    String url = "http://172.17.136.154:8084/CadastroPessoa/PesquisaPessoaServlet?mobile=true&nome=" + nome;
+                    HttpGet request = new HttpGet(url);
 
-            try {
-                // envia a requisição e recebe a resposta do servidor
-                HttpResponse response = client.execute(request);
+                    try {
+                        // envia a requisição e recebe a resposta do servidor
+                        HttpResponse response = client.execute(request);
 
-                // verifica se a requisição retornar código 200 OK
-                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                    // faz a leitura da resposta devolvida pelo servidor
-                    HttpEntity entity = response.getEntity();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
-                    String linha = null;
-                    List<Pessoa> pessoas = new ArrayList<Pessoa>();
-                    while ((linha = reader.readLine()) != null) {
-                        System.out.println(linha);
-                        String partes[] = linha.split("\\|");
-                        if (partes.length == 4) {
-                            Pessoa pessoa = new Pessoa();
-                            pessoa.setCodigo(stringToInt(partes[0]));
-                            pessoa.setNome(partes[1]);
-                            pessoa.setIdade(stringToInt(partes[2]));
-                            pessoa.setTime(partes[3]);
-                            pessoas.add(pessoa);
+                        // verifica se a requisição retornar código 200 OK
+                        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                            // faz a leitura da resposta devolvida pelo servidor
+                            HttpEntity entity = response.getEntity();
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+                            String linha = null;
+                            List<Pessoa> pessoas = new ArrayList<Pessoa>();
+                            while ((linha = reader.readLine()) != null) {
+                                System.out.println(linha);
+                                String partes[] = linha.split("\\|");
+                                if (partes.length == 4) {
+                                    Pessoa pessoa = new Pessoa();
+                                    pessoa.setCodigo(stringToInt(partes[0]));
+                                    pessoa.setNome(partes[1]);
+                                    pessoa.setIdade(stringToInt(partes[2]));
+                                    pessoa.setTime(partes[3]);
+                                    pessoas.add(pessoa);
+                                }
+                            }
+                            final PessoaAdapter adapter = new PessoaAdapter(MainActivity.this, R.layout.pessoa_item, pessoas);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    listView.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+
+                            reader.close();
+                            entity.consumeContent();
                         }
+                    } catch (final IOException e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this, "Erro: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+
                     }
-                    PessoaAdapter adapter = new PessoaAdapter(this, R.layout.pessoa_item, pessoas);
-                    listView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    reader.close();
-                    entity.consumeContent();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Erro: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
-        }
+        }.start();
     }
 
     private int stringToInt(String value) {

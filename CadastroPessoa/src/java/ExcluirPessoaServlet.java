@@ -5,7 +5,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class ExcluirPessoaServlet extends HttpServlet {
 
@@ -14,11 +13,6 @@ public class ExcluirPessoaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String paramCodigo = req.getParameter("codigo");
         PrintWriter out = resp.getWriter();
-        out.print("<html>");
-        out.print("<head>");
-        out.print("<title>Excluir Pessoas</title>");
-        out.print("</head>");
-        out.print("<body>");
         if (paramCodigo != null) {
             int codigo = Integer.parseInt(paramCodigo);
             Pessoa pessoa = Pessoas.getPessoa(codigo);
@@ -27,8 +21,6 @@ public class ExcluirPessoaServlet extends HttpServlet {
         } else {
             out.print("<h2>Código incorreto</h2>");
         }
-        out.print("</body>");
-        out.print("</html>");
     }
 
 }

@@ -5,19 +5,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class AlterarPessoaServlet extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
-        out.print("<html>");
-        out.print("<head>");
-        out.print("<title>Alterar Pessoas</title>");
-        out.print("</head>");
-        out.print("<body>");
 
         String paramCodigo = req.getParameter("codigo");
         if (paramCodigo != null) {
@@ -40,8 +33,6 @@ public class AlterarPessoaServlet extends HttpServlet {
         } else {
             out.print("<h2>Código incorreto</h2>");
         }
-        out.print("</body>");
-        out.print("</html>");
     }
 
     @Override
@@ -50,7 +41,7 @@ public class AlterarPessoaServlet extends HttpServlet {
         String paramNome = req.getParameter("nome");
         String paramIdade = req.getParameter("idade");
         String paramTime = req.getParameter("time");
-        
+
         if (paramCodigo != null) {
             int codigo = Integer.parseInt(paramCodigo);
             Pessoa pessoa = Pessoas.getPessoa(codigo);
@@ -58,7 +49,7 @@ public class AlterarPessoaServlet extends HttpServlet {
             pessoa.setIdade(paramIdade != null ? Integer.parseInt(paramIdade) : 0);
             pessoa.setTime(paramTime);
         }
-        
+
         resp.sendRedirect("PesquisaPessoaServlet");
     }
 
