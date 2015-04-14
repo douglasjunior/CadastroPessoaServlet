@@ -2,7 +2,7 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <filter>
         <filter-name>LoginFilter</filter-name>
-        <filter-class>LoginFilter</filter-class>
+        <filter-class>br.grupointegrado.cadastroPessoa.LoginFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
@@ -10,11 +10,11 @@
     </filter-mapping>
     <filter>
         <filter-name>TrimFilter</filter-name>
-        <filter-class>TrimFilter</filter-class>
+        <filter-class>br.grupointegrado.cadastroPessoa.TrimFilter</filter-class>
     </filter>
     <filter>
         <filter-name>ResponseFilter</filter-name>
-        <filter-class>ResponseFilter</filter-class>
+        <filter-class>br.grupointegrado.cadastroPessoa.ResponseFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ResponseFilter</filter-name>
@@ -26,19 +26,19 @@
     </filter-mapping>
     <servlet>
         <servlet-name>PesquisaPessoaServlet</servlet-name>
-        <servlet-class>PesquisaPessoaServlet</servlet-class>
+        <servlet-class>br.grupointegrado.cadastroPessoa.PesquisaPessoaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ExcluirPessoaServlet</servlet-name>
-        <servlet-class>ExcluirPessoaServlet</servlet-class>
+        <servlet-class>br.grupointegrado.cadastroPessoa.ExcluirPessoaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AlterarPessoaServlet</servlet-name>
-        <servlet-class>AlterarPessoaServlet</servlet-class>
+        <servlet-class>br.grupointegrado.cadastroPessoa.AlterarPessoaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
+        <servlet-class>br.grupointegrado.cadastroPessoa.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PesquisaPessoaServlet</servlet-name>

@@ -1,5 +1,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    String usuario = "";
+    String senha = "";
+    if (request.getCookies() != null){
+        for (Cookie c : request.getCookies()) {
+            if ("usuario".equals(c.getName())) {
+                usuario = c.getValue();
+            }
+            if ("senha".equals(c.getName())) {
+                senha = c.getValue();
+            }
+        }
+    }
+    %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,9 +30,9 @@
             }
         %>
         <form method="POST" action="LoginServlet" >
-            Usuário: <input type="text" name="usuario" value="" /><br /><br />
-            Senha: <input type="password" name="senha" value="" /><br /><br />
-            Salvar dados: <input type="checkbox" name="salvarDados" /><br /><br />
+            Usuário: <input type="text" name="usuario" value="<%=usuario%>" /><br /><br />
+            Senha: <input type="password" name="senha" value="<%=senha%>" /><br /><br />
+            Salvar dados: <input type="checkbox" name="salvarDados" <%= usuario != null ? "checked" : "" %> /><br /><br />
             <input type="submit" value="Entrar" />
         </form>
     </body>

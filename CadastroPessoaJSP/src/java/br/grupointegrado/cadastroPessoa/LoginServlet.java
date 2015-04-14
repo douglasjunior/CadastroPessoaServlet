@@ -1,3 +1,5 @@
+package br.grupointegrado.cadastroPessoa;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +19,6 @@ public class LoginServlet extends HttpServlet {
         String paramUsuario = req.getParameter("usuario");
         String paramSenha = req.getParameter("senha");
         String paramSalvarDados = req.getParameter("salvarDados");
-        System.out.println("Salvar dados? " + paramSalvarDados);
         if (USUARIO.equals(paramUsuario) && SENHA.equals(paramSenha)) {
             if ("on".equals(paramSalvarDados)) {
                 Cookie cookieUsuario = new Cookie("usuario", paramUsuario);
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession sessao = req.getSession();
             sessao.setAttribute("usuario_logado", true);
 
-            resp.sendRedirect("PesquisaPessoaServlet");
+            resp.sendRedirect("pesquisaPessoa.jsp");
         } else {
             req.setAttribute("mensagem_erro", "Usuário ou senha incorretos.");
             req.getRequestDispatcher("login.jsp").forward(req, resp);

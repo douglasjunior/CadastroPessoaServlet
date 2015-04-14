@@ -1,3 +1,5 @@
+package br.grupointegrado.cadastroPessoa;
+
 public class Pessoa {
 
     private int codigo;
