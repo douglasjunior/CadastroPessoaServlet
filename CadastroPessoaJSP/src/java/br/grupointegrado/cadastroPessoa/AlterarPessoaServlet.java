@@ -1,6 +1,5 @@
 package br.grupointegrado.cadastroPessoa;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,29 +11,19 @@ public class AlterarPessoaServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
-
         String paramCodigo = req.getParameter("codigo");
-        if (paramCodigo != null) {
+        if (paramCodigo != null && !paramCodigo.isEmpty()) {
             int codigo = Integer.parseInt(paramCodigo);
             Pessoa pessoa = Pessoas.getPessoa(codigo);
             if (pessoa != null) {
-                out.print("<h2>Alterar Pessoas</h2><br />");
-
-                out.print("<form method=\"POST\">");
-                out.print("Código: <input type=\"text\" name=\"codigo\" value=\"" + pessoa.getCodigo() + "\" disabled=\"disabled\" /><br /> ");
-                out.print("Nome: <input type=\"text\" name=\"nome\" value=\"" + pessoa.getNome() + "\" /><br /> ");
-                out.print("Idade: <input type=\"text\" name=\"idade\" value=\"" + pessoa.getIdade() + "\" /><br /> ");
-                out.print("Time: <input type=\"text\" name=\"time\" value=\"" + pessoa.getTime() + "\" /><br /> ");
-
-                out.print("<input type=\"submit\" value=\"Salvar\" /> <br /><br /> ");
-                out.print("</form>");
+                req.setAttribute("pessoa", pessoa);
             } else {
-                out.print("<h2>Pessoa não encontrada.</h2>");
+                req.setAttribute("mensagem_erro", "Pessoa não encontrada.");
             }
         } else {
-            out.print("<h2>Código incorreto</h2>");
+            req.setAttribute("mensagem_erro", "Código incorreto.");
         }
+        req.getRequestDispatcher("alterarPessoa.jsp").forward(req, resp);
     }
 
     @Override
@@ -43,7 +32,7 @@ public class AlterarPessoaServlet extends HttpServlet {
         String paramNome = req.getParameter("nome");
         String paramIdade = req.getParameter("idade");
         String paramTime = req.getParameter("time");
-
+        System.out.println(paramCodigo + paramNome + paramIdade + paramTime);
         if (paramCodigo != null) {
             int codigo = Integer.parseInt(paramCodigo);
             Pessoa pessoa = Pessoas.getPessoa(codigo);
@@ -52,7 +41,7 @@ public class AlterarPessoaServlet extends HttpServlet {
             pessoa.setTime(paramTime);
         }
 
-        resp.sendRedirect("PesquisaPessoaServlet");
+        resp.sendRedirect("pesquisaPessoa.jsp");
     }
 
 }

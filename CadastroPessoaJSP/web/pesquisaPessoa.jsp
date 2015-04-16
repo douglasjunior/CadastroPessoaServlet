@@ -6,9 +6,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Pesquisa de Pessoas</title>
-        <script>
-            function excluirPessoa(var codigo){
-                
+        <script lang="JavaScript" type="text/javascript">
+            function excluirPessoa(codigo) {
+                var result = confirm("Deseja excluir a pessoa " + codigo + " ?");
+                if (result) {
+                    window.location = "ExcluirPessoaServlet?codigo=" + codigo;
+                }
             }
         </script>
     </head>
