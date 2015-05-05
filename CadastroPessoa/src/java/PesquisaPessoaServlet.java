@@ -6,14 +6,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class PesquisaPessoaServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {       
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String paramNome = (String) req.getAttribute("nome");
         String paramMobile = req.getParameter("mobile");
+
+        System.out.println("Nome " + paramNome);
+        System.out.println("Mobile? " + paramMobile);
 
         List<Pessoa> encontradas = Pessoas.getPessoa(paramNome);
 
@@ -67,4 +69,14 @@ public class PesquisaPessoaServlet extends HttpServlet {
             out.println(pessoa.getTime());
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String paramNome = (String) req.getAttribute("nome");
+        String paramMobile = req.getParameter("mobile");
+
+        System.out.println("Nome " + paramNome);
+        System.out.println("Mobile? " + paramMobile);
+    }
+
 }

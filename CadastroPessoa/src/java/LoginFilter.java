@@ -30,7 +30,9 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html");
+        
         boolean acessandoLogin = httpRequest.getServletPath().equals("/LoginServlet");
 
         HttpSession sessao = httpRequest.getSession();

@@ -1,8 +1,6 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -33,10 +31,16 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String paramMobile = req.getParameter("mobile");
         String paramUsuario = req.getParameter("usuario");
         String paramSenha = req.getParameter("senha");
         String paramSalvarDados = req.getParameter("salvarDados");
+        
+        System.out.println("Usuario " + paramUsuario);
+        System.out.println("Senha " + paramSenha);
         System.out.println("Salvar dados? " + paramSalvarDados);
+        System.out.println("Mobile? " + paramMobile);
+        
         if (USUARIO.equals(paramUsuario) && SENHA.equals(paramSenha)) {
             if ("on".equals(paramSalvarDados)) {
                 Cookie cookieUsuario = new Cookie("usuario", paramUsuario);
@@ -48,10 +52,18 @@ public class LoginServlet extends HttpServlet {
             }
             HttpSession sessao = req.getSession();
             sessao.setAttribute("usuario_logado", true);
-
-            resp.sendRedirect("PesquisaPessoaServlet");
+            if (!"true".equals(paramMobile)) {
+                // faz o redrect somente se não for requisição Android
+                resp.sendRedirect("PesquisaPessoaServlet");
+            }
         } else {
-            imprimirFormulario(resp, "Usuário ou senha incorretos.", "", "");
+            if (!"true".equals(paramMobile)) {
+                // retorna erro para a Web
+                imprimirFormulario(resp, "Usuário ou senha incorretos.", "", "");
+            }else{
+                // retorna erro "401 UNAUTHRORIZED" para o Android
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário ou senha incorretos.");
+            }
         }
     }
 
