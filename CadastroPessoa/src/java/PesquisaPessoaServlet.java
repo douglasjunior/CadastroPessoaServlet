@@ -70,13 +70,4 @@ public class PesquisaPessoaServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String paramNome = (String) req.getAttribute("nome");
-        String paramMobile = req.getParameter("mobile");
-
-        System.out.println("Nome " + paramNome);
-        System.out.println("Mobile? " + paramMobile);
-    }
-
 }

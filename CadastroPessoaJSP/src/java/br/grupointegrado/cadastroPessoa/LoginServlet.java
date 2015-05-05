@@ -1,6 +1,5 @@
 package br.grupointegrado.cadastroPessoa;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String paramMobile = req.getParameter("mobile");
         String paramUsuario = req.getParameter("usuario");
         String paramSenha = req.getParameter("senha");
         String paramSalvarDados = req.getParameter("salvarDados");
@@ -30,11 +30,19 @@ public class LoginServlet extends HttpServlet {
             }
             HttpSession sessao = req.getSession();
             sessao.setAttribute("usuario_logado", true);
-
-            resp.sendRedirect("pesquisaPessoa.jsp");
+            if (!"true".equals(paramMobile)) {
+                // faz o redrect somente se não for requisição Android
+                resp.sendRedirect("pesquisaPessoa.jsp");
+            }
         } else {
-            req.setAttribute("mensagem_erro", "Usuário ou senha incorretos.");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
+            if (!"true".equals(paramMobile)) {
+                // retorna erro para a Web
+                req.setAttribute("mensagem_erro", "Usuário ou senha incorretos.");
+                req.getRequestDispatcher("login.jsp").forward(req, resp);
+            } else {
+                // retorna erro "401 UNAUTHRORIZED" para o Android
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Usuário ou senha incorretos.");
+            }
         }
     }
 

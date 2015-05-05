@@ -43,7 +43,7 @@ public class JHttpClient extends AsyncTask<Void, Void, String> {
     public static final String PUT = "PUT";
     public static final String DELETE = "DELETE";
 
-    public static final String SERVER = "http://192.168.10.105:8084/CadastroPessoa";
+    public static final String SERVER = "http://192.168.42.165:8084/CadastroPessoaJSP";
 
     public static String JSESSIONID = "";
     private final Context context;
