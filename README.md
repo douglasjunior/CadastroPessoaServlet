@@ -1,2 +1,2 @@
-# CadastroPessoaServlet
-Aplicação de cadastro de pessoas utilizando Servlets e cliente Android
+# Cadastro de Pessoas com Servlet
+Aplicação de cadastro de pessoas utilizando Servlets e JSP
